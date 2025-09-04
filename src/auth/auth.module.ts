@@ -3,6 +3,7 @@ import { PassportModule } from '@nestjs/passport'
 import { JwtModule } from '@nestjs/jwt'
 import { ConfigService } from '@nestjs/config'
 import { Env } from 'src/env'
+import { JwtStrategy } from './jwt.strategy'
 
 @Module({
   imports: [
@@ -22,32 +23,6 @@ import { Env } from 'src/env'
       },
     }),
   ],
+  providers: [JwtStrategy],
 })
 export class AuthModule {}
-
-// @Module({
-//   imports: [
-//     PassportModule,
-//     JwtModule.registerAsync({
-//       inject: [],
-//       useFactory() {
-//         const privateKey = readFileSync(
-//           join(__dirname, '../../keys/private_key.pem'),
-//           'utf8',
-//         )
-//         const publicKey = readFileSync(
-//           join(__dirname, '../../keys/public_key.pem'),
-//           'utf8',
-//         )
-
-//         return {
-//           signOptions: { algorithm: 'RS256' },
-//           privateKey,
-//           publicKey,
-//         }
-//       },
-//     }),
-//   ],
-//   exports: [JwtModule],
-// })
-// export class AuthModule {}
