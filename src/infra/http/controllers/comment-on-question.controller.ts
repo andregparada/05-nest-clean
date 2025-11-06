@@ -9,34 +9,33 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import type { UserPayload } from '@/infra/auth/jwt.strategy'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { AnswerQuestionUseCase } from '@/domain/forum/application/use-cases/answer-question'
+import { CommentOnQuestionUseCase } from '@/domain/forum/application/use-cases/comment-on-question'
 
-const answerQuestionBodySchema = z.object({
+const commentOnQuestionBodySchema = z.object({
   content: z.string(),
 })
 
-const bodyValidationPipe = new ZodValidationPipe(answerQuestionBodySchema)
+const bodyValidationPipe = new ZodValidationPipe(commentOnQuestionBodySchema)
 
-type AnswerQuestionBodySchema = z.infer<typeof answerQuestionBodySchema>
+type CommentOnQuestionBodySchema = z.infer<typeof commentOnQuestionBodySchema>
 
-@Controller('/questions/:questionId/answers')
-export class AnswerQuestionController {
-  constructor(private answerQuestion: AnswerQuestionUseCase) {}
+@Controller('/questions/:questionId/comments')
+export class CommentOnQuestionController {
+  constructor(private commentOnQuestion: CommentOnQuestionUseCase) {}
 
   @Post()
   async handle(
-    @Body(bodyValidationPipe) body: AnswerQuestionBodySchema,
+    @Body(bodyValidationPipe) body: CommentOnQuestionBodySchema,
     @CurrentUser() user: UserPayload,
     @Param('questionId') questionId: string,
   ) {
     const { content } = body
     const userId = user.sub
 
-    const result = await this.answerQuestion.execute({
+    const result = await this.commentOnQuestion.execute({
       content,
       questionId,
       authorId: userId,
-      attachmentsIds: [],
     })
 
     if (result.isLeft()) {
