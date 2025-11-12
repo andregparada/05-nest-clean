@@ -42,7 +42,7 @@ export class Question extends AggregateRoot<QuestionProps> {
 
   set title(title: string) {
     this.props.title = title
-    this.props.slug = Slug.createFormText(title)
+    this.props.slug = Slug.createFromText(title)
     this.touch()
   }
 
@@ -95,7 +95,7 @@ export class Question extends AggregateRoot<QuestionProps> {
     const question = new Question(
       {
         ...props,
-        slug: props.slug ?? Slug.createFormText(props.title),
+        slug: props.slug ?? Slug.createFromText(props.title),
         attachments: props.attachments ?? new QuestionAttachmentList(),
         createdAt: props.createdAt ?? new Date(),
       },

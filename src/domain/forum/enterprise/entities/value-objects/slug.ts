@@ -16,7 +16,7 @@ export class Slug {
    *
    * @param text {strring}
    */
-  static createFormText(text: string) {
+  static createFromText(text: string) {
     const slugText = text
       .normalize('NFKD')
       .toLowerCase()
