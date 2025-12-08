@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { ValueObject } from '@/core/entities/value-objects'
 import { Attachment } from '../attachment'
+import { Slug } from './slug'
 
 export interface QuestionDetailsProps {
   questionId: UniqueEntityID
@@ -8,7 +9,7 @@ export interface QuestionDetailsProps {
   author: string
   title: string
   content: string
-  slug: string
+  slug: Slug
   attachments: Attachment[]
   bestAnswerId?: UniqueEntityID | null
   createdAt: Date
