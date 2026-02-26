@@ -58,6 +58,8 @@ describe('Get Question By Slug', () => {
       slug: 'example-question',
     })
 
+    console.log(result.value)
+
     expect(result.value).toMatchObject({
       question: expect.objectContaining({
         title: newQuestion.title,
